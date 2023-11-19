@@ -1,5 +1,7 @@
 package com.thesun4sky.todoparty.todo;
 
+import java.util.Optional;
+
 import org.springframework.stereotype.Service;
 
 import com.thesun4sky.todoparty.user.User;
@@ -16,6 +18,12 @@ public class TodoService {
 
 		todoRepository.save(todo);
 
+		return new TodoResponseDTO(todo);
+	}
+
+	public TodoResponseDTO getTodo(Long todoId) {
+		Todo todo = todoRepository.findById(todoId)
+			.orElseThrow(() -> new IllegalArgumentException("존재하지 않는 할일 ID 입니다."));
 		return new TodoResponseDTO(todo);
 	}
 }
