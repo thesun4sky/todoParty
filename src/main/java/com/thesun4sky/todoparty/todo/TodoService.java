@@ -56,16 +56,30 @@ public class TodoService {
 
 	@Transactional
 	public TodoResponseDTO updateTodo(Long todoId, TodoRequestDTO todoRequestDTO, User user) {
+		Todo todo = getTodo(todoId, user);
+
+		todo.setTitle(todoRequestDTO.getTitle());
+		todo.setContent(todoRequestDTO.getContent());
+
+		return new TodoResponseDTO(todo);
+	}
+
+	@Transactional
+	public TodoResponseDTO competeTodo(Long todoId, User user) {
+		Todo todo = getTodo(todoId, user);
+
+		todo.complete(); // 완료 처리
+
+		return new TodoResponseDTO(todo);
+	}
+
+	private Todo getTodo(Long todoId, User user) {
 		Todo todo = todoRepository.findById(todoId)
 			.orElseThrow(() -> new IllegalArgumentException("존재하지 않는 할일 ID 입니다."));
 
 		if(!user.getId().equals(todo.getUser().getId())) {
 			throw new RejectedExecutionException("작성자만 수정할 수 있습니다.");
 		}
-
-		todo.setTitle(todoRequestDTO.getTitle());
-		todo.setContent(todoRequestDTO.getContent());
-
-		return new TodoResponseDTO(todo);
+		return todo;
 	}
 }
