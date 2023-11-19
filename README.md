@@ -24,8 +24,7 @@
 
 ## ERD 
 https://drawsql.app/teams/teasun/diagrams/springblog-2
-![image](https://github.com/thesun4sky/spring-blog/assets/17782941/01d76040-bc98-43da-b5bb-e234703d2862)
-
+![image](https://github.com/thesun4sky/todoParty/assets/17782941/910b1931-8ccd-4aeb-bbcd-5d8b20a1148f)
 
 
 ## API 명세
