@@ -28,12 +28,11 @@ https://drawsql.app/teams/teasun/diagrams/springblog-2
 
 
 ## API 명세
-
-https://documenter.getpostman.com/view/530494/2s9Xxwutam
-![image](https://github.com/thesun4sky/spring-blog/assets/17782941/e5803118-b3dc-45cb-afca-6a166c425ae0)
-
-https://documenter.getpostman.com/view/530494/2s9Xxwutan
-![image](https://github.com/thesun4sky/spring-blog/assets/17782941/11654826-9417-4976-b447-018130da0f03)
+https://documenter.getpostman.com/view/530494/2s9Ye8fuaj
+![image](https://github.com/thesun4sky/todoParty/assets/17782941/b082a74f-fd32-4c31-a65d-c19631673fdf)
+![image](https://github.com/thesun4sky/todoParty/assets/17782941/a714dc5d-794d-4f08-b4fb-c1790a02c07a)
+![image](https://github.com/thesun4sky/todoParty/assets/17782941/6e68c15a-9880-4508-8375-96ef0f0eb312)
+![image](https://github.com/thesun4sky/todoParty/assets/17782941/14ee1306-9bfd-4da7-8995-5534c067d32c)
 
 
 ## Spring Security 인증
