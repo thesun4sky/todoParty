@@ -6,6 +6,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -24,6 +25,7 @@ public class User {
 	@Column(nullable = false)
 	private String password;
 
+	@Builder
 	public User(String username, String password) {
 		this.username = username;
 		this.password = password;
