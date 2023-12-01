@@ -13,6 +13,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -42,6 +43,13 @@ public class Todo {
 
 	@OneToMany(mappedBy = "todo")
 	private List<Comment> comments;
+
+	@Builder
+	public Todo(Long id, String title, String content) {
+		this.id = id;
+		this.title = title;
+		this.content = content;
+	}
 
 	public Todo(TodoRequestDTO dto) {
 		this.title = dto.getTitle();

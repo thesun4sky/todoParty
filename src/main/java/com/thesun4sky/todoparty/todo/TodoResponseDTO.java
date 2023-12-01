@@ -4,11 +4,15 @@ import java.time.LocalDateTime;
 
 import com.thesun4sky.todoparty.CommonResponseDto;
 import com.thesun4sky.todoparty.user.UserDTO;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 
 @Setter
 @Getter
+@Builder
+@AllArgsConstructor
 public class TodoResponseDTO extends CommonResponseDto {
 	private Long id;
 	private String title;
