@@ -13,7 +13,7 @@ import lombok.Setter;
 @Setter
 @Getter
 @Builder
-@EqualsAndHashCode(callSuper = true)
+@EqualsAndHashCode(callSuper = false)
 @AllArgsConstructor
 public class TodoResponseDTO extends CommonResponseDto {
 	private Long id;

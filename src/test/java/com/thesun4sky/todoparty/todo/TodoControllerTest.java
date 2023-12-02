@@ -31,7 +31,7 @@ class TodoControllerTest extends ControllerTest implements TodoTest {
 	@MockBean
 	private TodoService todoService;
 
-	@DisplayName("할일 생성 - 성공")
+	@DisplayName("할일 생성 요청")
 	@Test
 	void postTodo() throws Exception {
 		// given
@@ -49,9 +49,9 @@ class TodoControllerTest extends ControllerTest implements TodoTest {
 
 
 	@Nested
-	@DisplayName("할일 조회")
+	@DisplayName("할일 조회 요청")
 	class getTodo {
-		@DisplayName("할일 조회 성공")
+		@DisplayName("할일 조회 요청 성공")
 		@Test
 		void getTodo_success() throws Exception {
 			// given
@@ -68,7 +68,7 @@ class TodoControllerTest extends ControllerTest implements TodoTest {
 				.andExpect(jsonPath("$.content").value(TEST_TODO_CONTENT));
 		}
 
-		@DisplayName("할일 조회 실패 -존재하지 않는 할일ID")
+		@DisplayName("할일 조회 요청 실패 -존재하지 않는 할일ID")
 		@Test
 		void getTodo_fail_todoNotExist() throws Exception {
 			// given
@@ -84,7 +84,7 @@ class TodoControllerTest extends ControllerTest implements TodoTest {
 		}
 	}
 
-	@DisplayName("할일 목록 조회 - 성공")
+	@DisplayName("할일 목록 조회 요청")
 	@Test
 	void getTodoList() throws Exception {
 		// given
@@ -111,9 +111,9 @@ class TodoControllerTest extends ControllerTest implements TodoTest {
 	}
 
 	@Nested
-	@DisplayName("할일 수정")
+	@DisplayName("할일 수정 요청")
 	class putTodo {
-		@DisplayName("할일 수정 성공")
+		@DisplayName("할일 수정 요청 성공")
 		@Test
 		void putTodo_success() throws Exception {
 			// given
@@ -132,7 +132,7 @@ class TodoControllerTest extends ControllerTest implements TodoTest {
 				.andExpect(jsonPath("$.content").value(TEST_TODO_CONTENT));
 		}
 
-		@DisplayName("할일 수정 실패 - 권한 없음")
+		@DisplayName("할일 수정 요청 실패 - 권한 없음")
 		@Test
 		void putTodo_fail_rejected() throws Exception {
 			// given
@@ -149,7 +149,7 @@ class TodoControllerTest extends ControllerTest implements TodoTest {
 				.andExpect(status().isBadRequest());
 		}
 
-		@DisplayName("할일 수정 실패 - 존재하지 않는 할일ID")
+		@DisplayName("할일 수정 요청 실패 - 존재하지 않는 할일ID")
 		@Test
 		void putTodo_fail_illegalArgument() throws Exception {
 			// given
@@ -168,9 +168,9 @@ class TodoControllerTest extends ControllerTest implements TodoTest {
 	}
 
 	@Nested
-	@DisplayName("할일 완료 처리")
+	@DisplayName("할일 완료 요청")
 	class completeTodo {
-		@DisplayName("할일 완료 처리 성공")
+		@DisplayName("할일 완료 요청 성공")
 		@Test
 		void completeTodo_success() throws Exception {
 			// given
@@ -187,7 +187,7 @@ class TodoControllerTest extends ControllerTest implements TodoTest {
 				.andExpect(jsonPath("$.content").value(TEST_TODO_CONTENT));
 		}
 
-		@DisplayName("할일 완료 처리 실패 - 권한 없음")
+		@DisplayName("할일 완료 요청 실패 - 권한 없음")
 		@Test
 		void completeTodo_fail_rejected() throws Exception {
 			// given
@@ -202,7 +202,7 @@ class TodoControllerTest extends ControllerTest implements TodoTest {
 				.andExpect(status().isBadRequest());
 		}
 
-		@DisplayName("할일 완료 처리 실패 - 존재하지 않는 할일ID")
+		@DisplayName("할일 완료 요청 실패 - 존재하지 않는 할일ID")
 		@Test
 		void completeTodo_fail_illegalArgument() throws Exception {
 			// given

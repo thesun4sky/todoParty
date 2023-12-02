@@ -23,9 +23,9 @@ public class TodoService {
 		Todo todo = new Todo(dto);
 		todo.setUser(user);
 
-		todoRepository.save(todo);
+		var saved = todoRepository.save(todo);
 
-		return new TodoResponseDTO(todo);
+		return new TodoResponseDTO(saved);
 	}
 
 	public TodoResponseDTO getTodoDto(Long todoId) {
