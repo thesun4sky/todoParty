@@ -59,23 +59,23 @@ public class TodoController {
 
 
 	@PutMapping("/{todoId}")
-	public ResponseEntity<CommonResponseDto> putTodo(@PathVariable Long todoId, @RequestBody TodoRequestDTO todoRequestDTO, @AuthenticationPrincipal UserDetailsImpl userDetails) {
+	public ResponseEntity<TodoResponseDTO> putTodo(@PathVariable Long todoId, @RequestBody TodoRequestDTO todoRequestDTO, @AuthenticationPrincipal UserDetailsImpl userDetails) {
 		try {
 			TodoResponseDTO responseDTO = todoService.updateTodo(todoId, todoRequestDTO, userDetails.getUser());
 			return ResponseEntity.ok().body(responseDTO);
 		} catch (RejectedExecutionException | IllegalArgumentException ex) {
-			return ResponseEntity.badRequest().body(new CommonResponseDto(ex.getMessage(), HttpStatus.BAD_REQUEST.value()));
+			return ResponseEntity.badRequest().body(new TodoResponseDTO(ex.getMessage(), HttpStatus.BAD_REQUEST.value()));
 		}
 	}
 
 
 	@PatchMapping("/{todoId}/complete")
-	public ResponseEntity<CommonResponseDto> patchTodo(@PathVariable Long todoId, @AuthenticationPrincipal UserDetailsImpl userDetails) {
+	public ResponseEntity<TodoResponseDTO> patchTodo(@PathVariable Long todoId, @AuthenticationPrincipal UserDetailsImpl userDetails) {
 		try {
 			TodoResponseDTO responseDTO = todoService.competeTodo(todoId, userDetails.getUser());
 			return ResponseEntity.ok().body(responseDTO);
 		} catch (RejectedExecutionException | IllegalArgumentException ex) {
-			return ResponseEntity.badRequest().body(new CommonResponseDto(ex.getMessage(), HttpStatus.BAD_REQUEST.value()));
+			return ResponseEntity.badRequest().body(new TodoResponseDTO(ex.getMessage(), HttpStatus.BAD_REQUEST.value()));
 		}
 	}
 }

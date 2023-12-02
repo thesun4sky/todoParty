@@ -23,6 +23,10 @@ public class TodoResponseDTO extends CommonResponseDto {
 	private UserDTO user;
 	private LocalDateTime createDate;
 
+	public TodoResponseDTO(String msg, Integer statusCode) {
+		super(msg, statusCode);
+	}
+
 	public TodoResponseDTO(Todo todo) {
 		this.id = todo.getId();
 		this.title = todo.getTitle();

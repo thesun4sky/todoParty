@@ -7,6 +7,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.RejectedExecutionException;
 
 import org.hamcrest.Matchers;
 import org.junit.jupiter.api.DisplayName;
@@ -21,6 +22,7 @@ import org.springframework.test.context.ActiveProfiles;
 import com.thesun4sky.todoparty.ControllerTest;
 import com.thesun4sky.todoparty.TodoTest;
 import com.thesun4sky.todoparty.TodoTestUtils;
+import com.thesun4sky.todoparty.user.User;
 import com.thesun4sky.todoparty.user.UserDTO;
 
 @ActiveProfiles("test")
@@ -68,7 +70,7 @@ class TodoControllerTest extends ControllerTest implements TodoTest {
 				.andExpect(jsonPath("$.content").value(TEST_TODO_CONTENT));
 		}
 
-		@DisplayName("할일 조회 실패(존재하지 않는 할일ID)")
+		@DisplayName("할일 조회 실패 -존재하지 않는 할일ID")
 		@Test
 		void getTodo_fail_todoNotExist() throws Exception {
 			// given
@@ -84,7 +86,7 @@ class TodoControllerTest extends ControllerTest implements TodoTest {
 		}
 	}
 
-	@DisplayName("할일 목록 조회")
+	@DisplayName("할일 목록 조회 - 성공")
 	@Test
 	void getTodoList() throws Exception {
 		// given
@@ -108,6 +110,69 @@ class TodoControllerTest extends ControllerTest implements TodoTest {
 				.andExpect(jsonPath("$[?(@.user.username=='" + TEST_ANOTHER_USER.getUsername() + "')].todoList[*].id")
 					.value(Matchers.containsInAnyOrder(testAnotherTodo.getId().intValue())));
 		verify(todoService, times(1)).getUserTodoMap();
+	}
+
+	@Nested
+	@DisplayName("할일 갱신")
+	class putTodo {
+		@DisplayName("할일 갱신 성공")
+		@Test
+		void putTodo_success() throws Exception {
+			// given
+			given(todoService.updateTodo(eq(TEST_TODO_ID), eq(TEST_TODO_REQUEST_DTO), any(User.class))).willReturn(TEST_TODO_RESPONSE_DTO);
+
+			// when
+			var action = mockMvc.perform(put("/api/todos/{todoId}", TEST_TODO_ID)
+				.contentType(MediaType.APPLICATION_JSON)
+				.accept(MediaType.APPLICATION_JSON)
+				.content(objectMapper.writeValueAsString(TEST_TODO_REQUEST_DTO)));
+
+			// then
+			action
+				.andExpect(status().isOk())
+				.andExpect(jsonPath("$.title").value(TEST_TODO_TITLE))
+				.andExpect(jsonPath("$.content").value(TEST_TODO_CONTENT));
+		}
+
+		@DisplayName("할일 갱신 실패 - 권한 없음")
+		@Test
+		void putTodo_fail_rejected() throws Exception {
+			// given
+			given(todoService.updateTodo(eq(TEST_TODO_ID), eq(TEST_TODO_REQUEST_DTO), any(User.class))).willThrow(new RejectedExecutionException());
+
+			// when
+			var action = mockMvc.perform(put("/api/todos/{todoId}", TEST_TODO_ID)
+				.contentType(MediaType.APPLICATION_JSON)
+				.accept(MediaType.APPLICATION_JSON)
+				.content(objectMapper.writeValueAsString(TEST_TODO_REQUEST_DTO)));
+
+			// then
+			action
+				.andExpect(status().isBadRequest());
+		}
+
+		@DisplayName("할일 갱신 실패 - 존재하지 않는 할일ID")
+		@Test
+		void putTodo_fail_illegalArgument() throws Exception {
+			// given
+			given(todoService.updateTodo(eq(TEST_TODO_ID), eq(TEST_TODO_REQUEST_DTO), any(User.class))).willThrow(new IllegalArgumentException());
+
+			// when
+			var action = mockMvc.perform(put("/api/todos/{todoId}", TEST_TODO_ID)
+				.contentType(MediaType.APPLICATION_JSON)
+				.accept(MediaType.APPLICATION_JSON)
+				.content(objectMapper.writeValueAsString(TEST_TODO_REQUEST_DTO)));
+
+			// then
+			action
+				.andExpect(status().isBadRequest());
+		}
+	}
+
+	@Nested
+	@DisplayName("할일 수정")
+	class patchTodo {
+
 	}
 
 
