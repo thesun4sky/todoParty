@@ -5,6 +5,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
@@ -38,36 +39,41 @@ class TodoControllerTest extends ControllerTest {
 		verify(todoService, times(1)).createTodo(any(TodoRequestDTO.class), eq(testUser));
 	}
 
-	@DisplayName("할일 조회 - 성공")
-	@Test
-	void getTodo() throws Exception {
-		// given
-		given(todoService.getTodoDto(eq(TEST_TODO_ID))).willReturn(TEST_TODO_RESPONSE_DTO);
 
-		// when
-		var action = mockMvc.perform(get("/api/todos/{todoId}", TEST_TODO_ID)
-			.accept(MediaType.APPLICATION_JSON));
+	@Nested
+	@DisplayName("할일 조회")
+	class getTodo {
+		@DisplayName("할일 조회 성공")
+		@Test
+		void getTodo_success() throws Exception {
+			// given
+			given(todoService.getTodoDto(eq(TEST_TODO_ID))).willReturn(TEST_TODO_RESPONSE_DTO);
 
-		// then
-		action
+			// when
+			var action = mockMvc.perform(get("/api/todos/{todoId}", TEST_TODO_ID)
+				.accept(MediaType.APPLICATION_JSON));
+
+			// then
+			action
 				.andExpect(status().isOk())
 				.andExpect(jsonPath("$.title").value(TEST_TODO_TITLE))
 				.andExpect(jsonPath("$.content").value(TEST_TODO_CONTENT));
-	}
+		}
 
-	@DisplayName("할일 조회 - 실패")
-	@Test
-	void getTodo_fail() throws Exception {
-		// given
-		given(todoService.getTodoDto(eq(TEST_TODO_ID))).willThrow(new IllegalArgumentException());
+		@DisplayName("할일 조회 실패(존재하지 않는 할일ID)")
+		@Test
+		void getTodo_fail_todoNotExist() throws Exception {
+			// given
+			given(todoService.getTodoDto(eq(TEST_TODO_ID))).willThrow(new IllegalArgumentException());
 
-		// when
-		var action = mockMvc.perform(get("/api/todos/{todoId}", TEST_TODO_ID)
-			.accept(MediaType.APPLICATION_JSON));
+			// when
+			var action = mockMvc.perform(get("/api/todos/{todoId}", TEST_TODO_ID)
+				.accept(MediaType.APPLICATION_JSON));
 
-		// then
-		action
-			.andExpect(status().isBadRequest());
+			// then
+			action
+				.andExpect(status().isBadRequest());
+		}
 	}
 
 
