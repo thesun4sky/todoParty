@@ -6,7 +6,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class UserRequestDto {
+public class UserRequestDTO {
 	@Pattern(regexp = "^[a-z0-9]{4,10}$")
 	private String username;
 

@@ -2,7 +2,7 @@ package com.thesun4sky.todoparty.todo;
 
 import java.time.LocalDateTime;
 
-import com.thesun4sky.todoparty.CommonResponseDto;
+import com.thesun4sky.todoparty.CommonResponseDTO;
 import com.thesun4sky.todoparty.user.UserDTO;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -15,7 +15,7 @@ import lombok.Setter;
 @Builder
 @EqualsAndHashCode(callSuper = false)
 @AllArgsConstructor
-public class TodoResponseDTO extends CommonResponseDto {
+public class TodoResponseDTO extends CommonResponseDTO {
 	private Long id;
 	private String title;
 	private String content;

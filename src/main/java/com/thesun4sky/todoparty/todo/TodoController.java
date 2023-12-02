@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.thesun4sky.todoparty.CommonResponseDto;
+import com.thesun4sky.todoparty.CommonResponseDTO;
 import com.thesun4sky.todoparty.user.UserDTO;
 import com.thesun4sky.todoparty.user.UserDetailsImpl;
 import lombok.RequiredArgsConstructor;
@@ -37,12 +37,12 @@ public class TodoController {
 	}
 
 	@GetMapping("/{todoId}")
-	public ResponseEntity<CommonResponseDto> getTodo(@PathVariable Long todoId) {
+	public ResponseEntity<CommonResponseDTO> getTodo(@PathVariable Long todoId) {
 		try {
 			TodoResponseDTO responseDTO = todoService.getTodoDto(todoId);
 			return ResponseEntity.ok().body(responseDTO);
 		} catch (IllegalArgumentException e) {
-			return ResponseEntity.badRequest().body(new CommonResponseDto(e.getMessage(), HttpStatus.BAD_REQUEST.value()));
+			return ResponseEntity.badRequest().body(new CommonResponseDTO(e.getMessage(), HttpStatus.BAD_REQUEST.value()));
 		}
 	}
 

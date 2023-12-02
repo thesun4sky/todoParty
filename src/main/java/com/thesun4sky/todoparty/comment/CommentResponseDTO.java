@@ -2,15 +2,14 @@ package com.thesun4sky.todoparty.comment;
 
 import java.time.LocalDateTime;
 
-import com.thesun4sky.todoparty.CommonResponseDto;
-import com.thesun4sky.todoparty.todo.Todo;
+import com.thesun4sky.todoparty.CommonResponseDTO;
 import com.thesun4sky.todoparty.user.UserDTO;
 import lombok.Getter;
 import lombok.Setter;
 
 @Setter
 @Getter
-public class CommentResponseDTO extends CommonResponseDto {
+public class CommentResponseDTO extends CommonResponseDTO {
 	private Long id;
 	private String text;
 	private UserDTO user;
