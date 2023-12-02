@@ -1,4 +1,4 @@
-package com.thesun4sky.todoparty;
+package com.thesun4sky.todoparty.test;
 
 import com.thesun4sky.todoparty.todo.Todo;
 import com.thesun4sky.todoparty.todo.TodoRequestDTO;

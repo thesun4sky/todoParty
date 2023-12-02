@@ -1,4 +1,4 @@
-package com.thesun4sky.todoparty;
+package com.thesun4sky.todoparty.test;
 
 import com.thesun4sky.todoparty.user.User;
 

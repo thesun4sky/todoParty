@@ -1,4 +1,4 @@
-package com.thesun4sky.todoparty;
+package com.thesun4sky.todoparty.test;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.springframework.beans.factory.annotation.Autowired;

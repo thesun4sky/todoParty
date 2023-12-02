@@ -13,21 +13,19 @@ import org.hamcrest.Matchers;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.TestInstance;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.ActiveProfiles;
 
-import com.thesun4sky.todoparty.ControllerTest;
-import com.thesun4sky.todoparty.TodoTest;
-import com.thesun4sky.todoparty.TodoTestUtils;
+import com.thesun4sky.todoparty.test.ControllerTest;
+import com.thesun4sky.todoparty.test.TodoTest;
+import com.thesun4sky.todoparty.test.TodoTestUtils;
 import com.thesun4sky.todoparty.user.User;
 import com.thesun4sky.todoparty.user.UserDTO;
 
 @ActiveProfiles("test")
 @WebMvcTest(TodoController.class)
-@TestInstance(TestInstance.Lifecycle.PER_METHOD)
 class TodoControllerTest extends ControllerTest implements TodoTest {
 
 	@MockBean
@@ -90,9 +88,9 @@ class TodoControllerTest extends ControllerTest implements TodoTest {
 	@Test
 	void getTodoList() throws Exception {
 		// given
-		var testTodo1 = TodoTestUtils.getTestTodo(TEST_TODO, 1L, LocalDateTime.now(), TEST_USER);
-		var testTodo2 = TodoTestUtils.getTestTodo(TEST_TODO, 2L, LocalDateTime.now().minusMinutes(1), TEST_USER);
-		var testAnotherTodo = TodoTestUtils.getTestTodo(TEST_TODO, 1L, LocalDateTime.now(), TEST_ANOTHER_USER);
+		var testTodo1 = TodoTestUtils.get(TEST_TODO, 1L, LocalDateTime.now(), TEST_USER);
+		var testTodo2 = TodoTestUtils.get(TEST_TODO, 2L, LocalDateTime.now().minusMinutes(1), TEST_USER);
+		var testAnotherTodo = TodoTestUtils.get(TEST_TODO, 1L, LocalDateTime.now(), TEST_ANOTHER_USER);
 
 		given(todoService.getUserTodoMap()).willReturn(
 			Map.of(new UserDTO(TEST_USER), List.of(new TodoResponseDTO(testTodo1), new TodoResponseDTO(testTodo2)),
