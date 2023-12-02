@@ -9,29 +9,10 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.thesun4sky.todoparty.todo.Todo;
-import com.thesun4sky.todoparty.todo.TodoRequestDTO;
-import com.thesun4sky.todoparty.todo.TodoResponseDTO;
 import com.thesun4sky.todoparty.user.User;
 import com.thesun4sky.todoparty.user.UserDetailsImpl;
 
 public class ControllerTest {
-	protected static final Long TEST_TODO_ID = 1L;
-	protected static final String TEST_TODO_TITLE = "title";
-	protected static final String TEST_TODO_CONTENT = "content";
-	protected static final TodoRequestDTO TEST_TODO_REQUEST_DTO = TodoRequestDTO.builder()
-		.title(TEST_TODO_TITLE)
-		.content(TEST_TODO_CONTENT)
-		.build();
-	protected static final TodoResponseDTO TEST_TODO_RESPONSE_DTO = TodoResponseDTO.builder()
-		.title(TEST_TODO_TITLE)
-		.content(TEST_TODO_CONTENT)
-		.build();
-	protected static final Todo TEST_TODO = Todo.builder()
-		.id(TEST_TODO_ID)
-		.title(TEST_TODO_TITLE)
-		.content(TEST_TODO_CONTENT)
-		.build();
 	@Autowired
 	private WebApplicationContext context;
 

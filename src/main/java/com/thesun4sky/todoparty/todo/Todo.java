@@ -1,5 +1,6 @@
 package com.thesun4sky.todoparty.todo;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -20,7 +21,7 @@ import lombok.NoArgsConstructor;
 @Getter
 @Entity
 @NoArgsConstructor
-public class Todo {
+public class Todo implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
@@ -45,8 +46,7 @@ public class Todo {
 	private List<Comment> comments;
 
 	@Builder
-	public Todo(Long id, String title, String content) {
-		this.id = id;
+	public Todo(String title, String content) {
 		this.title = title;
 		this.content = content;
 	}

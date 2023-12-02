@@ -6,12 +6,14 @@ import com.thesun4sky.todoparty.CommonResponseDto;
 import com.thesun4sky.todoparty.user.UserDTO;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 
 @Setter
 @Getter
 @Builder
+@EqualsAndHashCode(callSuper = true)
 @AllArgsConstructor
 public class TodoResponseDTO extends CommonResponseDto {
 	private Long id;
