@@ -24,7 +24,6 @@ import com.thesun4sky.todoparty.test.TodoTestUtils;
 import com.thesun4sky.todoparty.user.User;
 import com.thesun4sky.todoparty.user.UserDTO;
 
-@ActiveProfiles("test")
 @WebMvcTest(TodoController.class)
 class TodoControllerTest extends ControllerTest implements TodoTest {
 

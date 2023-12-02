@@ -3,7 +3,6 @@ package com.thesun4sky.todoparty.configuration;
 import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -18,7 +17,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.thesun4sky.todoparty.jwt.JwtAuthorizationFilter;
 import com.thesun4sky.todoparty.jwt.JwtUtil;
 import com.thesun4sky.todoparty.user.UserDetailsService;
-import com.thesun4sky.todoparty.user.UserService;
 import lombok.RequiredArgsConstructor;
 
 @Configuration

@@ -62,7 +62,7 @@ class TodoServiceTest implements TodoTest {
 		assertThat(result).isEqualTo(new TodoResponseDTO(testTodo));
 	}
 
-	@DisplayName("할일 리스트 맵")
+	@DisplayName("할일 리스트 맵 (최신순 정렬)")
 	@Test
 	void getUserTodoMap() {
 		// given
@@ -144,7 +144,7 @@ class TodoServiceTest implements TodoTest {
 			assertThat(result).isEqualTo(testTodo);
 		}
 
-		@DisplayName("유저의 할일 조회 실패")
+		@DisplayName("유저의 할일 조회 실패 - 조회 권한 없음")
 		@Test
 		void getUserTodo_fail() {
 			// given
