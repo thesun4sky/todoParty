@@ -113,9 +113,9 @@ class TodoControllerTest extends ControllerTest implements TodoTest {
 	}
 
 	@Nested
-	@DisplayName("할일 갱신")
+	@DisplayName("할일 수정")
 	class putTodo {
-		@DisplayName("할일 갱신 성공")
+		@DisplayName("할일 수정 성공")
 		@Test
 		void putTodo_success() throws Exception {
 			// given
@@ -134,7 +134,7 @@ class TodoControllerTest extends ControllerTest implements TodoTest {
 				.andExpect(jsonPath("$.content").value(TEST_TODO_CONTENT));
 		}
 
-		@DisplayName("할일 갱신 실패 - 권한 없음")
+		@DisplayName("할일 수정 실패 - 권한 없음")
 		@Test
 		void putTodo_fail_rejected() throws Exception {
 			// given
@@ -151,7 +151,7 @@ class TodoControllerTest extends ControllerTest implements TodoTest {
 				.andExpect(status().isBadRequest());
 		}
 
-		@DisplayName("할일 갱신 실패 - 존재하지 않는 할일ID")
+		@DisplayName("할일 수정 실패 - 존재하지 않는 할일ID")
 		@Test
 		void putTodo_fail_illegalArgument() throws Exception {
 			// given
@@ -170,9 +170,54 @@ class TodoControllerTest extends ControllerTest implements TodoTest {
 	}
 
 	@Nested
-	@DisplayName("할일 수정")
-	class patchTodo {
+	@DisplayName("할일 완료 처리")
+	class completeTodo {
+		@DisplayName("할일 완료 처리 성공")
+		@Test
+		void completeTodo_success() throws Exception {
+			// given
+			given(todoService.competeTodo(eq(TEST_TODO_ID), any(User.class))).willReturn(TEST_TODO_RESPONSE_DTO);
 
+			// when
+			var action = mockMvc.perform(patch("/api/todos/{todoId}/complete", TEST_TODO_ID)
+				.accept(MediaType.APPLICATION_JSON));
+
+			// then
+			action
+				.andExpect(status().isOk())
+				.andExpect(jsonPath("$.title").value(TEST_TODO_TITLE))
+				.andExpect(jsonPath("$.content").value(TEST_TODO_CONTENT));
+		}
+
+		@DisplayName("할일 완료 처리 실패 - 권한 없음")
+		@Test
+		void completeTodo_fail_rejected() throws Exception {
+			// given
+			given(todoService.competeTodo(eq(TEST_TODO_ID), any(User.class))).willThrow(new RejectedExecutionException());
+
+			// when
+			var action = mockMvc.perform(patch("/api/todos/{todoId}/complete", TEST_TODO_ID)
+				.accept(MediaType.APPLICATION_JSON));
+
+			// then
+			action
+				.andExpect(status().isBadRequest());
+		}
+
+		@DisplayName("할일 완료 처리 실패 - 존재하지 않는 할일ID")
+		@Test
+		void completeTodo_fail_illegalArgument() throws Exception {
+			// given
+			given(todoService.competeTodo(eq(TEST_TODO_ID), any(User.class))).willThrow(new IllegalArgumentException());
+
+			// when
+			var action = mockMvc.perform(patch("/api/todos/{todoId}/complete", TEST_TODO_ID)
+				.accept(MediaType.APPLICATION_JSON));
+
+			// then
+			action
+				.andExpect(status().isBadRequest());
+		}
 	}
 
 

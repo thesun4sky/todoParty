@@ -70,7 +70,7 @@ public class TodoController {
 
 
 	@PatchMapping("/{todoId}/complete")
-	public ResponseEntity<TodoResponseDTO> patchTodo(@PathVariable Long todoId, @AuthenticationPrincipal UserDetailsImpl userDetails) {
+	public ResponseEntity<TodoResponseDTO> completeTodo(@PathVariable Long todoId, @AuthenticationPrincipal UserDetailsImpl userDetails) {
 		try {
 			TodoResponseDTO responseDTO = todoService.competeTodo(todoId, userDetails.getUser());
 			return ResponseEntity.ok().body(responseDTO);
