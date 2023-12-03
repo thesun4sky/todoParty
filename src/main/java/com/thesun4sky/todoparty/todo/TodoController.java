@@ -72,7 +72,7 @@ public class TodoController {
 	@PatchMapping("/{todoId}/complete")
 	public ResponseEntity<TodoResponseDTO> completeTodo(@PathVariable Long todoId, @AuthenticationPrincipal UserDetailsImpl userDetails) {
 		try {
-			TodoResponseDTO responseDTO = todoService.competeTodo(todoId, userDetails.getUser());
+			TodoResponseDTO responseDTO = todoService.completeTodo(todoId, userDetails.getUser());
 			return ResponseEntity.ok().body(responseDTO);
 		} catch (RejectedExecutionException | IllegalArgumentException ex) {
 			return ResponseEntity.badRequest().body(new TodoResponseDTO(ex.getMessage(), HttpStatus.BAD_REQUEST.value()));

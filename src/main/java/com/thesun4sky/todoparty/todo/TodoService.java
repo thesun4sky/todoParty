@@ -64,7 +64,7 @@ public class TodoService {
 	}
 
 	@Transactional
-	public TodoResponseDTO competeTodo(Long todoId, User user) {
+	public TodoResponseDTO completeTodo(Long todoId, User user) {
 		Todo todo = getUserTodo(todoId, user);
 
 		todo.complete(); // 완료 처리

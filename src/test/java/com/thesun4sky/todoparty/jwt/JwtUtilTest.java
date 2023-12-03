@@ -1,14 +1,14 @@
 package com.thesun4sky.todoparty.jwt;
 
+import static com.thesun4sky.todoparty.jwt.JwtUtil.*;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.BDDMockito.*;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.Nested;
+import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
@@ -29,7 +29,6 @@ class JwtUtilTest implements CommonTest {
 
 	@BeforeEach
 	void setUp() {
-		MockitoAnnotations.openMocks(this);
 		jwtUtil.init();
 	}
 
@@ -47,14 +46,15 @@ class JwtUtilTest implements CommonTest {
 	@Test
 	void resolveToken() {
 		// given
-		String token = "Bearer test-token";
+		var token = "test-token";
+		var bearerToken = BEARER_PREFIX + token;
 
 		// when
-		given(request.getHeader(JwtUtil.AUTHORIZATION_HEADER)).willReturn(token);
-		String resolvedToken = jwtUtil.resolveToken(request);
+		given(request.getHeader(JwtUtil.AUTHORIZATION_HEADER)).willReturn(bearerToken);
+		var resolvedToken = jwtUtil.resolveToken(request);
 
 		// then
-		assertEquals("test-token", resolvedToken);
+		assertEquals(token, resolvedToken);
 	}
 
 	@DisplayName("토큰 검증")

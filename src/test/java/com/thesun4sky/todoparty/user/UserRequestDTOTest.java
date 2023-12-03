@@ -24,8 +24,8 @@ class UserRequestDTOTest implements CommonTest {
 		void createUserRequestDTO_success() {
 			// given
 			UserRequestDTO userRequestDTO = new UserRequestDTO();
-			userRequestDTO.setUsername("abcd1234");
-			userRequestDTO.setPassword("Abcdef12");
+			userRequestDTO.setUsername(TEST_USER_NAME);
+			userRequestDTO.setPassword(TEST_USER_PASSWORD);
 
 			// when
 			Set<ConstraintViolation<UserRequestDTO>> violations = validate(userRequestDTO);

@@ -42,7 +42,7 @@ class TodoControllerTest extends ControllerTest implements TodoTest {
 
 		// then
 		action.andExpect(status().isCreated());
-		verify(todoService, times(1)).createTodo(any(TodoRequestDTO.class), eq(testUser));
+		verify(todoService, times(1)).createTodo(any(TodoRequestDTO.class), eq(TEST_USER));
 	}
 
 
@@ -66,9 +66,9 @@ class TodoControllerTest extends ControllerTest implements TodoTest {
 				.andExpect(jsonPath("$.content").value(TEST_TODO_CONTENT));
 		}
 
-		@DisplayName("할일 조회 요청 실패 -존재하지 않는 할일ID")
+		@DisplayName("할일 조회 요청 실패 - 존재하지 않는 할일ID")
 		@Test
-		void getTodo_fail_todoNotExist() throws Exception {
+		void getTodo_fail_todoIdNotExist() throws Exception {
 			// given
 			given(todoService.getTodoDto(eq(TEST_TODO_ID))).willThrow(new IllegalArgumentException());
 
@@ -88,7 +88,7 @@ class TodoControllerTest extends ControllerTest implements TodoTest {
 		// given
 		var testTodo1 = TodoTestUtils.get(TEST_TODO, 1L, LocalDateTime.now(), TEST_USER);
 		var testTodo2 = TodoTestUtils.get(TEST_TODO, 2L, LocalDateTime.now().minusMinutes(1), TEST_USER);
-		var testAnotherTodo = TodoTestUtils.get(TEST_TODO, 1L, LocalDateTime.now(), TEST_ANOTHER_USER);
+		var testAnotherTodo = TodoTestUtils.get(TEST_TODO, 3L, LocalDateTime.now(), TEST_ANOTHER_USER);
 
 		given(todoService.getUserTodoMap()).willReturn(
 			Map.of(new UserDTO(TEST_USER), List.of(new TodoResponseDTO(testTodo1), new TodoResponseDTO(testTodo2)),
@@ -172,7 +172,8 @@ class TodoControllerTest extends ControllerTest implements TodoTest {
 		@Test
 		void completeTodo_success() throws Exception {
 			// given
-			given(todoService.competeTodo(eq(TEST_TODO_ID), any(User.class))).willReturn(TEST_TODO_RESPONSE_DTO);
+			TEST_TODO_RESPONSE_DTO.setIsCompleted(true);
+			given(todoService.completeTodo(eq(TEST_TODO_ID), any(User.class))).willReturn(TEST_TODO_RESPONSE_DTO);
 
 			// when
 			var action = mockMvc.perform(patch("/api/todos/{todoId}/complete", TEST_TODO_ID)
@@ -182,14 +183,15 @@ class TodoControllerTest extends ControllerTest implements TodoTest {
 			action
 				.andExpect(status().isOk())
 				.andExpect(jsonPath("$.title").value(TEST_TODO_TITLE))
-				.andExpect(jsonPath("$.content").value(TEST_TODO_CONTENT));
+				.andExpect(jsonPath("$.content").value(TEST_TODO_CONTENT))
+				.andExpect(jsonPath("$.isCompleted").value(true));
 		}
 
 		@DisplayName("할일 완료 요청 실패 - 권한 없음")
 		@Test
 		void completeTodo_fail_rejected() throws Exception {
 			// given
-			given(todoService.competeTodo(eq(TEST_TODO_ID), any(User.class))).willThrow(new RejectedExecutionException());
+			given(todoService.completeTodo(eq(TEST_TODO_ID), any(User.class))).willThrow(new RejectedExecutionException());
 
 			// when
 			var action = mockMvc.perform(patch("/api/todos/{todoId}/complete", TEST_TODO_ID)
@@ -204,7 +206,7 @@ class TodoControllerTest extends ControllerTest implements TodoTest {
 		@Test
 		void completeTodo_fail_illegalArgument() throws Exception {
 			// given
-			given(todoService.competeTodo(eq(TEST_TODO_ID), any(User.class))).willThrow(new IllegalArgumentException());
+			given(todoService.completeTodo(eq(TEST_TODO_ID), any(User.class))).willThrow(new IllegalArgumentException());
 
 			// when
 			var action = mockMvc.perform(patch("/api/todos/{todoId}/complete", TEST_TODO_ID)

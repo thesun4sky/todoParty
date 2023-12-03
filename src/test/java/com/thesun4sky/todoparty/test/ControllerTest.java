@@ -12,7 +12,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.thesun4sky.todoparty.user.User;
 import com.thesun4sky.todoparty.user.UserDetailsImpl;
 
-public class ControllerTest {
+public class ControllerTest implements CommonTest {
 	@Autowired
 	private WebApplicationContext context;
 
@@ -22,11 +22,6 @@ public class ControllerTest {
 	@Autowired
 	protected ObjectMapper objectMapper;
 
-	protected User testUser = User.builder()
-		.username("testUser")
-		.password("testPassword")
-		.build();
-
 	@BeforeEach
 	void setUp() {
 		mockMvc = MockMvcBuilders
@@ -34,7 +29,7 @@ public class ControllerTest {
 			.build();
 
 		// Mock 테스트 UserDetails 생성
-		UserDetailsImpl testUserDetails = new UserDetailsImpl(testUser);
+		UserDetailsImpl testUserDetails = new UserDetailsImpl(TEST_USER);
 
 		// SecurityContext 에 인증된 사용자 설정
 		SecurityContextHolder.getContext().setAuthentication(new UsernamePasswordAuthenticationToken(

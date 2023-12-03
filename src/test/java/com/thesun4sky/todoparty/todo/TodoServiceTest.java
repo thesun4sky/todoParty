@@ -106,7 +106,7 @@ class TodoServiceTest implements TodoTest {
 		given(todoRepository.findById(eq(TEST_TODO_ID))).willReturn(Optional.of(testTodo));
 
 		// when
-		var result = todoService.competeTodo(TEST_TODO_ID, TEST_USER);
+		var result = todoService.completeTodo(TEST_TODO_ID, TEST_USER);
 
 		// then
 		assertThat(result.getIsCompleted()).isEqualTo(true);
